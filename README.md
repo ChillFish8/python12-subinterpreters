@@ -22,6 +22,40 @@ maturin develop
 
 Which will build and compile the library which can then be imported as `subinterpreters`.
 
+### Usage
+
+It's a pretty simple API:
+
+```py
+from subinterpreters import create_interpreter, SubInterpreter
+
+
+new: SubInterpreter = create_interpreter(
+    # Some optional config options to mess with:
+    # allow_exec=False,
+    # allow_fork=False,
+    # allow_threads=True,
+    # allow_daemon_threads=False,
+)
+
+new.run_code(
+    """
+    import random
+    print(random.randint(1, 10))
+    """
+)
+
+# You can pass globals and locals
+new.run_code(
+    """
+    import random
+    print(random.randint(1, 10))
+    """,
+    globals=globals(),
+    locals=locals(),
+)
+```
+
 ### Notes
 
 Sometimes, if an error occurs, the process will exit with a status code which largely 
